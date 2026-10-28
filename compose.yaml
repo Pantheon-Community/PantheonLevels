@@ -1,0 +1,14 @@
+# https://docs.docker.com/compose/compose-file/
+name: pantheon
+
+services:
+    pantheon-levels:
+        container_name: pantheon-levels
+        build: .
+        env_file: .env
+        restart: ${RESTART_POLICY}
+        mem_limit: ${HARD_MEMORY_LIMIT}
+        mem_reservation: ${SOFT_MEMORY_LIMIT}
+
+        environment:
+            - GIT_COMMIT_HASH=${GIT_COMMIT_HASH}

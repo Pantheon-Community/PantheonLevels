@@ -1,0 +1,17 @@
+{
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "oxc.typeAware": true,
+    "json.validate.enable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.oxc": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "[typescript]": {
+        "editor.rulers": [100]
+    },
+    "[javascript]": {
+        "editor.rulers": [100]
+    }
+}

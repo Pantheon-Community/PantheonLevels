@@ -1,0 +1,4 @@
+{
+    "recommendations": ["EditorConfig.EditorConfig", "oxc.oxc-vscode"],
+    "unwantedRecommendations": []
+}
