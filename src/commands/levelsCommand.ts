@@ -23,7 +23,7 @@ allData.push(calculateLevel(roleRequirements[roleRequirements.length - 1]));
 export const levelsCommand: Command = {
     name: "levels",
 
-    description: "See a list of all the levels.",
+    description: "See a list of all the levels",
 
     async execute(interaction) {
         await interaction.reply({

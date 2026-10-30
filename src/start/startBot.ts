@@ -1,4 +1,5 @@
 import { commands } from "@/commands";
+import { addGuildMemberAddListeners } from "@/events/guildMemberAdd";
 import { addInteractionCreateListeners } from "@/events/interactionCreate";
 import { addMessageCreateListeners } from "@/events/messageCreate";
 import { client, setClient } from "@/global/client";
@@ -66,6 +67,8 @@ export async function startBot(): Promise<TeardownFn> {
 
         client.login(config.discordBotToken);
     });
+
+    addGuildMemberAddListeners();
 
     addMessageCreateListeners();
 

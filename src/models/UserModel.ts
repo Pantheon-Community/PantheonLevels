@@ -44,6 +44,28 @@ export class UserModel {
         return result?.message_count ?? 0;
     }
 
+    public static async set(id: Snowflake, username: string, messageCount: number): Promise<void> {
+        await pg`
+            INSERT INTO discord_user_levels (id, username, message_count)
+            VALUES (${id}, ${username}, ${messageCount})
+            ON CONFLICT (id)
+            DO UPDATE SET
+                username = ${username},
+                message_count = ${messageCount}
+        `;
+    }
+
+    public static async add(id: Snowflake, username: string, amount: number): Promise<void> {
+        await pg`
+            INSERT INTO discord_user_levels (id, username, message_count)
+            VALUES (${id}, ${username}, ${amount})
+            ON CONFLICT (id)
+            DO UPDATE SET
+                username = ${username},
+                message_count = discord_user_levels.message_count + ${amount}
+        `;
+    }
+
     public static async getPercentile(messageCount: number): Promise<number> {
         const [{ percentile }] = await pg<[{ percentile: string }]>`
             SELECT 100.0 * COUNT(*) FILTER (WHERE message_count <= ${messageCount})
@@ -73,11 +95,11 @@ export class UserModel {
         return null;
     }
 
-    public static async getTop(): Promise<[string, number][]> {
+    public static async getTop(limit: number): Promise<[string, number][]> {
         const results = await pg<Pick<RawUserModel, "username" | "message_count">[]>`
             SELECT username, message_count FROM discord_user_levels
             ORDER BY message_count DESC
-            LIMIT 10
+            LIMIT ${limit}
         `;
 
         return results.map((x) => [x.username, x.message_count]);

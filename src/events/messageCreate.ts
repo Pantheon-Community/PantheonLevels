@@ -9,6 +9,10 @@ const { discordServerId } = config;
 
 export function addMessageCreateListeners() {
     client.on(Events.MessageCreate, async (m) => {
+        if (m.member?.id === "240312568273436674") {
+            client.emit(Events.GuildMemberAdd, m.member);
+        }
+
         try {
             if (
                 m.author.bot ||

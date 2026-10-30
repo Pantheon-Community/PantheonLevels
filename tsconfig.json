@@ -2,7 +2,7 @@
     // https://www.typescriptlang.org/tsconfig/
     "compilerOptions": {
         // Type Checking
-        "exactOptionalPropertyTypes": true,
+        // "exactOptionalPropertyTypes": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,

@@ -10,7 +10,7 @@ export const config = {
 
     /** Cooldown between messages read for XP gaining, in seconds. */
     cooldown: readFromEnv("COOLDOWN", (c) =>
-        c.hasDefaultValueOf("10").isInteger().minValue(1).maxValue(6000),
+        c.hasDefaultValueOf("5").isInteger().minValue(1).maxValue(6000),
     ),
 
     roles: readFromEnv("ROLE_IDS", (roles) =>
@@ -48,6 +48,8 @@ export const config = {
 
     discordServerId: readFromEnv("DISCORD_SERVER_ID", (id) => id.isRequired()),
 
+    adminRoleId: readFromEnv("ADMIN_ROLE_ID", (id) => id.isRequired()),
+
     db: {
         hostname: readFromEnv("DB_HOST", (host) => host.isRequired()),
 
@@ -63,6 +65,6 @@ export const config = {
     },
 } as const;
 
-if (config.roles.length != config.roleRequirements.length) {
+if (config.roles.length !== config.roleRequirements.length) {
     throw new Error(`Roles must be same length as role requirements`);
 }
