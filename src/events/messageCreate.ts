@@ -5,7 +5,7 @@ import { UserModel } from "@/models/UserModel";
 import { giveRoles } from "@/utils/giveRoles";
 import { Events, roleMention, userMention } from "discord.js";
 
-const { discordServerId, roles } = config;
+const { discordServerId } = config;
 
 export function addMessageCreateListeners() {
     client.on(Events.MessageCreate, async (m) => {
