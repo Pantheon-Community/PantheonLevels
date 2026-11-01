@@ -37,9 +37,12 @@ export function calculateLevelIndex(messageCount: number): number {
 }
 
 export function* rolesOfLevel(index: number): Generator<Snowflake> {
-    for (let i = 0; i <= index; i++) {
-        yield roles[i];
-    }
+    // give only role at current level
+    yield roles[index];
+    // // give roles of previous levels too
+    // for (let i = 0; i <= index; i++) {
+    //     yield roles[i];
+    // }
 }
 
 export function calculateLevel(messageCount: number): LevelInfo {
