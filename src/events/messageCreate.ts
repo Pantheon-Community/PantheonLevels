@@ -3,9 +3,9 @@ import { config } from "@/global/config";
 import { isOnCooldown, setIsOnCooldown } from "@/global/limiter";
 import { UserModel } from "@/models/UserModel";
 import { giveRoles } from "@/utils/giveRoles";
-import { Events } from "discord.js";
+import { Events, roleMention, userMention } from "discord.js";
 
-const { discordServerId } = config;
+const { discordServerId, roles } = config;
 
 export function addMessageCreateListeners() {
     client.on(Events.MessageCreate, async (m) => {
@@ -26,7 +26,14 @@ export function addMessageCreateListeners() {
 
             const messageCount = await UserModel.increment(id, displayName);
 
-            await giveRoles(m.member, messageCount);
+            const highestRoleGiven = await giveRoles(m.member, messageCount);
+
+            if (highestRoleGiven !== undefined) {
+                await m.reply({
+                    content: `${userMention(id)} levelled up to ${roleMention(highestRoleGiven)}`,
+                    allowedMentions: {},
+                });
+            }
         } catch (error) {
             console.log(error);
         }
