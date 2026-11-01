@@ -1,6 +1,7 @@
 import { config } from "@/global/config";
 import { UserModel } from "@/models/UserModel";
 import type { Command } from "@/types/Command";
+import { giveRoles } from "@/utils/giveRoles";
 import { calculateLevel, clamp } from "@/utils/levelCalculations";
 import { makeClampedBar } from "@/utils/makeBar";
 import { bold, Colors, EmbedBuilder, MessageFlags, roleMention, userMention } from "discord.js";
@@ -82,6 +83,14 @@ export const levelCommand: Command = {
         }
 
         const messageCount = setTo ?? (await UserModel.get(user.id));
+
+        if (setTo !== null || add !== null) {
+            const asMember = await interaction.guild?.members.fetch(user.id);
+
+            if (asMember) {
+                await giveRoles(asMember, messageCount);
+            }
+        }
 
         let [percentile, rank] = await Promise.all([
             UserModel.getPercentile(messageCount),
