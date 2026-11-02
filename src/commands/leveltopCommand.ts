@@ -5,6 +5,7 @@ import { makeBar } from "@/utils/makeBar";
 import { bold, Colors, EmbedBuilder, MessageFlags } from "discord.js";
 
 const limit = 5;
+const fullLimit = 10;
 
 export const leveltopCommand: Command = {
     name: "level-top",
@@ -13,13 +14,15 @@ export const leveltopCommand: Command = {
 
     build(base) {
         base.addBooleanOption((x) =>
+            x.setName("full").setDescription("Whether to show 10 instead of just 5"),
+        ).addBooleanOption((x) =>
             x.setName("non-ephemeral").setDescription("Whether to show the result to everyone"),
         );
     },
 
     async execute(interaction) {
         const [top, myCount] = await Promise.all([
-            UserModel.getTop(limit),
+            UserModel.getTop(interaction.options.getBoolean("full") ? fullLimit : limit),
             UserModel.get(interaction.user.id),
         ]);
 
