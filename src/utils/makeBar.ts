@@ -1,7 +1,7 @@
 import { clamp } from "./levelCalculations";
 
-const barA = "<:histo_again:1564942981922816080>";
-const barB = "<:histo_again_darker:1564943020313284698>";
+const barA = "<:LevelLight:1566783307365224518>";
+const barB = "<:LevelDark:1566783466408902676>";
 
 export function makeBar(percentFill: number, width: number, emptyChar = barB): string {
     const fillPart = Math.round(percentFill * width);
